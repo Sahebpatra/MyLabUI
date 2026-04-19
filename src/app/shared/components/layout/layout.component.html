@@ -3,12 +3,12 @@
   <aside
     id="sidebar-wrapper"
     [class.collapsed]="isCollapsed"
-    class="bg-white shadow"
+    class="shadow sidebar-color"
   >
-    <div class="sidebar-brand p-3 d-flex align-items-center border-bottom">
+    <div class="sidebar-brand p-2 d-flex align-items-center border-bottom">
       <i class="fas fa-microscope fa-2x text-primary me-2"></i>
       @if (!isCollapsed) {
-        <span class="fw-bold fs-5 text-dark">MY LAB</span>
+        <span class="fw-bold fs-5 text-white">MY LAB</span>
       }
     </div>
 
@@ -17,7 +17,7 @@
         <a
           routerLink="/dashboard"
           routerLinkActive="active"
-          class="nav-link text-secondary py-3"
+          class="nav-link text-white py-3"
         >
           <i class="fas fa-home fa-fw me-3"></i>
           @if (!isCollapsed) {
@@ -29,7 +29,7 @@
         <a
           routerLink="/admin/test-list"
           routerLinkActive="active"
-          class="nav-link text-secondary py-3"
+          class="nav-link text-white py-3"
         >
           <i class="fas fa-flask fa-fw me-3"></i>
           @if (!isCollapsed) {
@@ -94,7 +94,7 @@
         <a
           routerLink="/analytics"
           routerLinkActive="active"
-          class="nav-link text-secondary py-3"
+          class="nav-link text-white py-3"
         >
           <i class="fas fa-chart-line fa-fw me-3"></i>
           @if (!isCollapsed) {
@@ -106,7 +106,7 @@
         <a
           routerLink="/users"
           routerLinkActive="active"
-          class="nav-link text-secondary py-3"
+          class="nav-link text-white py-3"
         >
           <i class="fas fa-users fa-fw me-3"></i>
           @if (!isCollapsed) {
@@ -118,7 +118,7 @@
         <a
           routerLink="/settings"
           routerLinkActive="active"
-          class="nav-link text-secondary py-3"
+          class="nav-link text-white py-3"
         >
           <i class="fas fa-cog fa-fw me-3"></i>
           @if (!isCollapsed) {
@@ -145,7 +145,7 @@
         <i class="fas fa-bars fa-lg"></i>
       </button>
       <div class="ms-auto d-flex align-items-center">
-        <span class="me-3 text-secondary d-none d-md-block"
+        <span class="me-3 text-white d-none d-md-block"
           >Welcome, Admin</span
         >
         <i class="fas fa-user-circle fa-2x text-primary cursor-pointer"></i>
@@ -153,7 +153,7 @@
     </header>
 
     <!-- Content Body -->
-    <main class="p-2 flex-grow-1 overflow-y-scroll-auto">
+    <main class="p-2 flex-grow-1 overflow-y-scroll-auto full-body">
       <router-outlet></router-outlet>
     </main>
   </div>
