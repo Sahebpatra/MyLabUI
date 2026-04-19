@@ -1,0 +1,219 @@
+<div class="card shadow-sm">
+  <div class="card-header bg-light py-2">
+    <div class="d-flex justify-content-between align-items-center">
+      <a
+        href="#"
+        routerLink="/admin/test-list"
+        class="btn btn-sm btn-secondary"
+      >
+        <i class="fa fa-arrow-left me-1"></i> Back
+      </a>
+      <button
+        type="submit"
+        id="submitTest"
+        class="btn btn-sm btn-success"
+        (click)="onTestSubmit()"
+      >
+        <i
+          [ngClass]="isEditMode ? 'fa fas fa-refresh' : 'fa fa-paper-plane'"
+          class="me-1"
+        ></i>
+        {{ isEditMode ? " Update" : " Submit" }}
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <form class="needs-validation" [formGroup]="testForm">
+      <input type="hidden" name="TestId" id="hdnTestId" />
+
+      <div class="row g-3">
+        <!-- Test Name -->
+        <div class="col-md-4 col-lg-3">
+          <label for="TestDesc" class="form-label fw-semibold"
+            >Test Name <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            placeholder="Enter test name"
+            formControlName="testDesc"
+            required
+          />
+        </div>
+        <!-- Test Type -->
+        <div class="col-md-4 col-lg-2">
+          <label for="TestType" class="form-label fw-semibold"
+            >Test Type <span class="text-danger">*</span></label
+          >
+          <select
+            class="form-select form-select-sm select2"
+            required
+            formControlName="testType"
+          >
+            <option *ngFor="let item of testType" [value]="item.valueCode">
+              {{ item.displayText }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Department -->
+        <div class="col-md-4 col-lg-2">
+          <label for="Department" class="form-label fw-semibold"
+            >Department <span class="text-danger">*</span></label
+          >
+          <select
+            class="form-select form-select-sm select2"
+            required
+            formControlName="department"
+          >
+            <option value="0">- Select -</option>
+            <option *ngFor="let item of departmentList" [value]="item.deptId">
+              {{ item.deptName }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Test Code -->
+        <div class="col-md-4 col-lg-2">
+          <label for="TestCode" class="form-label fw-semibold">Test Code</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            formControlName="testCode"
+          />
+        </div>
+
+        <!-- Price -->
+        <div class="col-md-4 col-lg-2">
+          <label for="Price" class="form-label fw-semibold"
+            >Price <span class="text-danger">*</span></label
+          >
+          <input
+            type="number"
+            class="form-control form-control-sm"
+            required
+            formControlName="price"
+          />
+        </div>
+
+        <!-- Barcode Suffix -->
+        <div class="col-md-4 col-lg-3">
+          <label for="BarCodeSuffix" class="form-label fw-semibold"
+            >Barcode Suffix</label
+          >
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            formControlName="barCodeSuffix"
+          />
+        </div>
+
+        <!-- Sample -->
+        <div class="col-md-4 col-lg-2">
+          <label for="Sample" class="form-label fw-semibold"
+            >Sample <span class="text-danger">*</span></label
+          >
+          <select
+            class="form-select form-select-sm select2"
+            required
+            formControlName="sample"
+          >
+            <option value="0">- Select -</option>
+            <option *ngFor="let item of sample" [value]="item.valueCode">
+              {{ item.displayText }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Sample Color -->
+        <div class="col-md-4 col-lg-2">
+          <label for="SampleColor" class="form-label fw-semibold"
+            >Sample Color</label
+          >
+          <select
+            class="form-select form-select-sm select2"
+            formControlName="sampleColor"
+          >
+            <option value="0">- Select -</option>
+            <option *ngFor="let item of sampleColor" [value]="item.valueCode">
+              {{ item.displayText }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Gender Radio -->
+        <div class="col-md-6 col-lg-3">
+          <label class="form-label fw-semibold d-block"
+            >Gender <span class="text-danger">*</span></label
+          >
+          <div class="pt-1">
+            @for (item of gender; track item) {
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  [id]="'chk' + item.displayText"
+                  [value]="item.valueCode"
+                  formControlName="gender"
+                />
+                <label
+                  class="form-check-label"
+                  [for]="'chk' + item.displayText"
+                  >{{ item.displayText }}</label
+                >
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Collection Guideline Radio -->
+        <div class="col-md-4 col-lg-2">
+          <label class="form-label fw-semibold d-block">
+            Collection Guidelines
+          </label>
+          <div class="pt-1" class="form-control">
+            <label
+              class="form-check-label"
+              for="guidelineCheck"
+              (click)="onGuidelineChange()"
+            >
+              <i class="far fa-plus-square fs-6"></i> Add Giudeline</label
+            >
+          </div>
+        </div>
+        <!-- Collection Guideline Text (Shown only if "Yes" is selected) -->
+        <app-rich-text
+          #guidelineModal
+          [control]="getControl('collectionGuidline')"
+        ></app-rich-text>
+        <!-- Required Fields Checkboxes (Changed to inline for space) -->
+        <div class="col-md-6 col-lg-6 mt-4">
+          <label class="form-label fw-semibold d-block">Required Fields:</label>
+          <div class="pt-1">
+            @for (item of reqField; track $index) {
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  [id]="'chk' + item.displayText"
+                  [value]="item.valueCode"
+                  [checked]="item.valueCode === '1'"
+                  formControlName="requiredField"
+                />
+                <label
+                  class="form-check-label"
+                  [for]="'chk' + item.displayText"
+                  >{{ item.displayText }}</label
+                >
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<app-parameters
+  [paramsList]="parameterList"
+  (paramsListChanged)="onParamsListUpdate($event)"
+></app-parameters>

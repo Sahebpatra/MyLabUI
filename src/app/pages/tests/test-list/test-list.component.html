@@ -1,0 +1,64 @@
+<div class="card">
+  <div class="card-header">
+    <div class="d-flex justify-content-between">
+      <h5>Test List</h5>
+      <button
+        routerLink="/admin/new-test"
+        type="button"
+        id="btnAddNew"
+        class="btn btn-sm btn-outline-secondary"
+      >
+        <i class="fa fa-plus"></i> Add New
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive table-container">
+      <table class="table " id="testTable">
+        <thead>
+          <tr class="">
+            <th>#</th>
+            <th>Test Name</th>
+            <th>Test Type</th>
+            <th>Department</th>
+            <th>Gender</th>
+            <th>Sample</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of displayList; track $index) {
+            <tr>
+              <td>{{ pageSize * (currentPage - 1) + $index + 1 }}</td>
+              <td>{{ item.testDesc }}</td>
+              <td>{{ item.testTypeText }}</td>
+              <td>{{ item.departmentText }}</td>
+              <td>{{ item.genderText }}</td>
+              <td>
+                {{ item.sampleText }}
+                <div
+                  [style.backgroundColor]="item.sampleColorText"
+                  class="sample-color"
+                ></div>
+              </td>
+              <td class="text-center">
+                <i
+                  [routerLink]="['/admin/edit-test', item.testId]"
+                  class="far fa-edit text-primary"
+                  style="cursor: pointer"
+                ></i>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <app-pagination
+      [totalItems]="testList.length"
+      [pageSize]="pageSize"
+      [currentPage]="currentPage"
+      (pageChange)="onPageChange($event)"
+    >
+    </app-pagination>
+  </div>
+</div>

@@ -1,0 +1,306 @@
+<div class="row mt-2">
+  <!-- Left Side: Table Container -->
+  <div
+    [class]="isAddnNewParam ? 'col-lg-9' : 'col-lg-12'"
+    id="divTestDetailscontainer"
+  >
+    <div class="card testlist shadow-sm" style="height: 100%;">
+      <div class="card-header">
+        <div class="d-flex justify-content-between">
+          <span><strong>Parameters</strong></span>
+          @if (!isAddnNewParam) {
+            <button
+              class="btn btn-sm btn-outline-success"
+              (click)="isAddnNewParam = true"
+            >
+              <i class="fa fa-add"></i> New
+            </button>
+          }
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive table-container">
+        <table class="table mb-0 shadow-lg">
+          <thead class="table">
+            <tr>
+              <th></th>
+              <th width="35%">Name</th>
+              <th>Field</th>
+              <th>Unit</th>
+              <th>Range</th>
+              <th>Formula</th>
+              <th width="100px">Action</th>
+            </tr>
+          </thead>
+          <tbody id="testTableBody">
+            @for (parent of displayList; track parent.RowId) {
+              <!-- Parent Row -->
+              <tr
+                class="parent-row"
+                [class.table-primary]="selectedRowId === parent.RowId"
+              >
+                <td>
+                  @if (parent.FieldType == 2) {
+                    <i
+                      class="far"
+                      [ngClass]="
+                        parent.isExpanded
+                          ? 'far fa-caret-square-down'
+                          : 'far fa-caret-square-up'
+                      "
+                      (click)="toggleChild(parent)"
+                      style="cursor: pointer"
+                      [title]="parent.isExpanded ? 'Collapse' : 'Expand'"
+                    ></i>
+                  }
+                </td>
+                <td>{{ parent.TestName }}</td>
+                <td>{{ parent.FieldType == 1 ? "Single" : "Multiple" }}</td>
+                <td>{{ parent.FieldType == 1 ? parent.Unit : "" }}</td>
+                <td>
+                  {{
+                    parent.FieldType == 1
+                      ? parent.ResultRangeMin + "-" + parent.ResultRangeMax
+                      : ""
+                  }}
+                </td>
+                <td>
+                  @if (parent.FieldType == 1) {
+                    <input type="checkbox" disabled />
+                  }
+                </td>
+                <td>
+                  <i
+                    class="far fa-trash-alt text-danger me-2 fa-sm"
+                    (click)="deleteRow(parent.RowId)"
+                    style="cursor: pointer"
+                    title="Click to delete"
+                  ></i>
+                  <i
+                    class="far fa-edit text-primary me-2 fa-sm"
+                    (click)="editRow(parent)"
+                    style="cursor: pointer"
+                    title="Click to edit"
+                  ></i>
+                  @if (parent.FieldType == "2") {
+                    <i
+                      class="fa far fa-plus-square text-success me-2 fa-md"
+                      (click)="addChildParam(parent)"
+                      style="cursor: pointer"
+                      title="Click to add child parameter"
+                    ></i>
+                  }
+                </td>
+              </tr>
+
+              <!-- Child Rows Logic -->
+              @if (parent.FieldType == "2" && parent.isExpanded) {
+                @for (child of parent.Children; track child.RowId) {
+                  <tr class="table-light">
+                    <td></td>
+                    <td class="ps-4">
+                      <i
+                        class="fa fa-level-up-alt fa-rotate-90 me-2 text-muted"
+                      ></i
+                      >{{ child.TestName }}
+                    </td>
+                    <td>Single</td>
+                    <td>{{ child.Unit }}</td>
+                    <td>
+                      {{ child.ResultRangeMin }}-{{ child.ResultRangeMax }}
+                    </td>
+                    <td><input type="checkbox" disabled /></td>
+                    <td>
+                      <i
+                        class="far fa-trash-alt text-danger me-2 fa-sm"
+                        (click)="deleteRow(child.RowId)"
+                        style="cursor: pointer"
+                      ></i>
+                      <i
+                        class="far fa-edit text-primary me-2 fa-sm"
+                        (click)="editRow(child)"
+                        style="cursor: pointer"
+                      ></i>
+                    </td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="7" class="text-center text-muted small italic">
+                      No Child Parameter Added yet
+                    </td>
+                  </tr>
+                }
+              }
+            } @empty {
+              <tr>
+                <td colspan="7" class="text-center text-muted small italic">
+                  No Test Parameter Added yet
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+       </div>
+    </div>
+  </div>
+
+  <!-- Right Side: Forms Container -->
+  @if (isAddnNewParam) {
+    <div class="col-lg-3" id="detailsForm ">
+      <div class="card shadow-sm">
+        <div class="card-header">
+          <div class="d-flex justify-content-between">
+            <span><strong>Add/Edit Parameters</strong></span>
+            @if (isAddnNewParam) {
+              <button class="btn btn-sm" (click)="resetForms()">
+                <i class="fa fa-times"></i>
+              </button>
+            }
+          </div>
+        </div>
+        <div class="card-body">
+          <!-- Param Form (Detailed parameters) -->
+
+          <form [formGroup]="paramForm">
+            @if (paramForm.get("ParrentId")?.value === 0) {
+              <div class="mt-3">
+                <label class="form-label required">Field Type</label>
+                <select
+                  class="form-select"
+                  formControlName="FieldType"
+                  (change)="onFieldTypeChange($event)"
+                >
+                  <option value="1">Single</option>
+                  <option value="2">Multiple</option>
+                </select>
+              </div>
+            }
+
+            <div class="mt-3">
+              <label class="form-label required">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="TestName"
+              />
+            </div>
+            @if (paramForm.get("FieldType")?.value == 1) {
+              <div class="mt-3">
+                <label class="form-label required">Test Method</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="TestMethod"
+                />
+              </div>
+
+              <div class="mt-3 row">
+                <div class="col-6">
+                  <label class="form-label">Field</label>
+                  <select class="form-select" formControlName="UnitFieldType">
+                    <option value="0">- Select -</option>
+                    <option value="1">Numeric</option>
+                    <option value="2">Text</option>
+                  </select>
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Unit</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="Unit"
+                  />
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <label class="form-label">Result Operator</label>
+                <div class="col-12 mb-2">
+                  <select class="form-select" formControlName="ResultOperator">
+                    <option value="">- Select -</option>
+                    <option value="1">Between</option>
+                    <option value="2">Greater Than</option>
+                    <option value="3">Less Than</option>
+                    <option value="4">Equal To</option>
+                  </select>
+                </div>
+                <div class="col-6">
+                  <input
+                    type="number"
+                    class="form-control"
+                    formControlName="ResultRangeMin"
+                    placeholder="Min"
+                  />
+                </div>
+                <div class="col-6">
+                  <input
+                    type="number"
+                    class="form-control"
+                    formControlName="ResultRangeMax"
+                    placeholder="Max"
+                  />
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="form-check form-switch ms-2">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="CritCheck"
+                    formControlName="CriticalRange"
+                  />
+                  <label class="form-check-label" for="CritCheck"
+                    >Critical Range</label
+                  >
+                </div>
+
+                @if (paramForm.get("CriticalRange")?.value) {
+                  <div class="col-6 mt-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="CriticalRangeMin"
+                      placeholder="Crit Min"
+                    />
+                  </div>
+                  <div class="col-6 mt-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="CriticalRangeMax"
+                      placeholder="Crit Max"
+                    />
+                  </div>
+                }
+              </div>
+            }
+            <div id="dvFieldFrm">
+              <div class="mt-3 d-flex justify-content-end gap-2">
+                <button
+                  type="button"
+                  (click)="resetForms()"
+                  class="btn btn-sm btn-outline-secondary"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  (click)="addRow()"
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i
+                    class="fa"
+                    [ngClass]="isUpdateMode ? 'fa-sync' : 'fa-plus'"
+                  ></i>
+                  {{ isUpdateMode ? "Update Field" : "Add Field" }}
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  }
+</div>

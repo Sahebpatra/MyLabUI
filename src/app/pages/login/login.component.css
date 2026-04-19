@@ -1,0 +1,50 @@
+/* Centered Full Page Wrapper */
+.login-container {
+  height: 100vh;
+  width: 100vw;
+  background-color: #f4f7f6; /* Grayish background to match app */
+}
+
+/* Card Styling */
+.login-card {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 12px;
+  background-color: #ffffff; /* Pure white card */
+}
+
+/* Tab Pill Customisation */
+.nav-pills .nav-link {
+  color: #6c757d;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 10px;
+  transition: 0.3s;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #f0f7ff; /* Light blue subtle bg */
+  color: #0d6efd;
+  box-shadow: none;
+}
+
+/* Form Input Focus Styling */
+.form-control:focus {
+  border-color: #dee2e6;
+  box-shadow: none;
+}
+
+.input-group-text {
+  border-right: none;
+}
+
+.btn-primary {
+  background-color: #0d6efd;
+  border: none;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #0b5ed7;
+  transform: translateY(-1px);
+}

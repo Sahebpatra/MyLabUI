@@ -1,0 +1,28 @@
+<div
+      class="modal fade"
+      #modalElement
+      id="ckModal"
+      tabindex="-1"
+      data-bs-backdrop="static"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Collection Guidelines</h5>
+            <button type="button" class="btn-close" (click)="close()"></button>
+          </div>
+          <div class="modal-body">
+            <ckeditor
+              [editor]="Editor"
+              [config]="config"
+              [formControl]="control"
+            ></ckeditor>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="close()">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>

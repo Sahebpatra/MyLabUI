@@ -1,0 +1,160 @@
+<div class="d-flex" id="wrapper">
+  <!-- Sidebar -->
+  <aside
+    id="sidebar-wrapper"
+    [class.collapsed]="isCollapsed"
+    class="bg-white shadow"
+  >
+    <div class="sidebar-brand p-3 d-flex align-items-center border-bottom">
+      <i class="fas fa-microscope fa-2x text-primary me-2"></i>
+      @if (!isCollapsed) {
+        <span class="fw-bold fs-5 text-dark">MY LAB</span>
+      }
+    </div>
+
+    <ul class="nav flex-column mt-3">
+      <li class="nav-item">
+        <a
+          routerLink="/dashboard"
+          routerLinkActive="active"
+          class="nav-link text-secondary py-3"
+        >
+          <i class="fas fa-home fa-fw me-3"></i>
+          @if (!isCollapsed) {
+            <span>Dashboard</span>
+          }
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          routerLink="/admin/test-list"
+          routerLinkActive="active"
+          class="nav-link text-secondary py-3"
+        >
+          <i class="fas fa-flask fa-fw me-3"></i>
+          @if (!isCollapsed) {
+            <span>Tests</span>
+          }
+        </a>
+      </li>
+      <!-- Tests Dropdown -->
+      <!-- <li class="nav-item">
+        <a
+          class="nav-link text-secondary py-3 d-flex align-items-center cursor-pointer"
+          data-bs-toggle="collapse"
+          href="#testsSubmenu"
+          role="button"
+        >
+
+          <span class="icon-wrapper">
+            <i class="fas fa-vial fa-fw"></i>
+          </span>
+          @if (!isCollapsed) {
+            <span class="ms-3">Tests</span>
+            <i class="fas fa-chevron-down ms-auto small"></i>
+          }
+        </a>
+
+
+        <div class="collapse" id="testsSubmenu">
+          <ul class="nav flex-column ps-4 bg-light">
+            <li class="nav-item">
+              <a
+                routerLink="/admin/new-test"
+                routerLinkActive="active"
+                class="nav-link text-secondary py-2 small"
+              >
+                <span class="icon-wrapper">
+                  <i class="fas fa-add fa-fw"></i>
+                </span>
+                @if (!isCollapsed) {
+                  <span class="ms-3">New Test</span>
+                }
+              </a>
+            </li>
+             <li class="nav-item">
+              <a
+                routerLink="/admin/test-list"
+                routerLinkActive="active"
+                class="nav-link text-secondary py-2 small"
+              >
+                <span class="icon-wrapper">
+                  <i class="fas fa-list fa-fw"></i>
+                </span>
+                @if (!isCollapsed) {
+                  <span class="ms-3">Test List</span>
+                }
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li> -->
+
+      <li class="nav-item">
+        <a
+          routerLink="/analytics"
+          routerLinkActive="active"
+          class="nav-link text-secondary py-3"
+        >
+          <i class="fas fa-chart-line fa-fw me-3"></i>
+          @if (!isCollapsed) {
+            <span>Analytics</span>
+          }
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          routerLink="/users"
+          routerLinkActive="active"
+          class="nav-link text-secondary py-3"
+        >
+          <i class="fas fa-users fa-fw me-3"></i>
+          @if (!isCollapsed) {
+            <span>Users</span>
+          }
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          routerLink="/settings"
+          routerLinkActive="active"
+          class="nav-link text-secondary py-3"
+        >
+          <i class="fas fa-cog fa-fw me-3"></i>
+          @if (!isCollapsed) {
+            <span>Settings</span>
+          }
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div
+    id="page-content-wrapper"
+    class="flex-grow-1 d-flex flex-column bg-gray-app"
+  >
+    <!-- Navbar -->
+    <header
+      class="navbar navbar-expand nav-header-color border-bottom px-4 py-2 sticky-top shadow-sm"
+    >
+      <button
+        class="btn btn-link text-dark p-0 border-0 me-3"
+        (click)="toggleSidebar()"
+      >
+        <i class="fas fa-bars fa-lg"></i>
+      </button>
+      <div class="ms-auto d-flex align-items-center">
+        <span class="me-3 text-secondary d-none d-md-block"
+          >Welcome, Admin</span
+        >
+        <i class="fas fa-user-circle fa-2x text-primary cursor-pointer"></i>
+      </div>
+    </header>
+
+    <!-- Content Body -->
+    <main class="p-2 flex-grow-1 overflow-y-scroll-auto">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
