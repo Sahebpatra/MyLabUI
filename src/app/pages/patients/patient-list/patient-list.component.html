@@ -1,0 +1,58 @@
+<div class="card">
+  <div class="card-header">
+    <div class="d-flex justify-content-between">
+      <h5>Patient List</h5>
+      <button
+        routerLink="/admin/new-patient"
+        type="button"
+        id="btnAddNew"
+        class="btn btn-sm btn-outline-secondary"
+      >
+        <i class="fa fa-user-plus"></i> New Patient
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive table-container">
+      <table class="table " id="testTable">
+        <thead>
+          <tr class="">
+            <th>#</th>
+            <th>Patient Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of displayList; track $index) {
+            <tr>
+              <td>{{ pageSize * (currentPage - 1) + $index + 1 }}</td>
+              <td>{{ item.firstName }} {{ item.lastName }}</td>
+              <td>{{ item.age }}</td>
+              <td>{{ item.genderText }}</td>
+              <td>{{ item.phone }}</td>
+              <td>{{ item.email }}</td>
+              <td class="text-center">
+                <i
+                  [routerLink]="['/admin/edit-patient', item.id]"
+                  class="far fa-edit text-primary"
+                  style="cursor: pointer"
+                ></i>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <app-pagination
+      [totalItems]="patientList.length"
+      [pageSize]="pageSize"
+      [currentPage]="currentPage"
+      (pageChange)="onPageChange($event)"
+    >
+    </app-pagination>
+  </div>
+</div>

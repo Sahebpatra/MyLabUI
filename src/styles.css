@@ -110,4 +110,8 @@ th {
 .table-container tbody tr:last-child td:last-child {
   border-bottom-right-radius: 5px;
 }
-
+.error-text{
+  color: #dc3545;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}

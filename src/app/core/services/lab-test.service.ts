@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { CommonHttpService } from './common/common-http.service';
 import { Observable } from 'rxjs';
-import { ApiResponse } from '../models/apiResponse';
+import { ApiResponse } from '../../shared/models/api-response.model';
 import { constants } from '../constants/constants';
 
 @Injectable({

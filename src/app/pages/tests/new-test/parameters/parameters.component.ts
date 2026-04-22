@@ -14,7 +14,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { TestParameterModel } from '../../../../core/models/TestParameterModel';
+import { TestParameterModel } from '../../../../core/models/test-parameter.model';
 import { NotificationService } from '../../../../core/services/common/notification.service';
 import { ActivatedRoute } from '@angular/router';
 

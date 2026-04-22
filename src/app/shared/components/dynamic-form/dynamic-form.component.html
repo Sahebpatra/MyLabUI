@@ -1,0 +1,227 @@
+<div class="card shadow-sm">
+  <div class="card-header bg-light py-2">
+    <div class="d-flex justify-content-between align-items-center">
+      <button
+        type="button"
+        (click)="onBack.emit()"
+        class="btn btn-sm btn-light"
+      >
+        <i class="fa fa-caret-left me-1"></i> Back
+      </button>
+      <span class="fw-bold">{{ config?.title }}</span>
+      @if (config.buttonPlacement === "top") {
+        <div>
+          <button
+            type="button"
+            class="btn btn-sm btn-secondary me-2"
+            (click)="handleReset()"
+          >
+            <i class="fa fa-rotate-back me-1"></i> Reset
+          </button>
+
+          <button
+            type="submit"
+            class="btn btn-sm btn-success px-3"
+            [disabled]="dynamicForm.invalid"
+            (click)="handleSubmit()"
+          >
+            <i
+              [ngClass]="isEditMode ? 'fa fas fa-refresh' : 'far fa-save fs-6'"
+              class="me-1"
+            ></i>
+            {{ isEditMode ? " Update" : config?.saveLabel || "Submit" }}
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="card-body">
+    <form [formGroup]="dynamicForm">
+      <div class="row g-3">
+        @for (ctrl of config.controls; track ctrl.name) {
+          @if (ctrl.type === "hidden") {
+            <input type="hidden" [formControlName]="ctrl.name" />
+          } @else {
+            <div [class]="ctrl.gridClass || 'col-md-4'">
+              <label class="form-label fw-semibold">
+                {{ ctrl.label }}
+                @if (ctrl.validators?.required) {
+                  <span class="text-danger">*</span>
+                }
+              </label>
+
+              @switch (ctrl.type) {
+                @case ("select") {
+                  <select
+                    class="form-select form-select-sm"
+                    [class.error-border]="
+                      dynamicForm.get(ctrl.name)?.invalid &&
+                      dynamicForm.get(ctrl.name)?.touched
+                    "
+                    [formControlName]="ctrl.name"
+                  >
+                    <option value="">Select</option>
+                    @for (opt of ctrl.options; track opt.valueCode) {
+                      <option [value]="opt.valueCode">
+                        {{ opt.displayText }}
+                      </option>
+                    }
+                    @if (ctrl.asyncOptionsKey || ctrl.apiUrl) {
+                      @for (
+                        item of lookupData[ctrl.name] | async;
+                        track item.valueCode
+                      ) {
+                        <option [value]="item.valueCode">
+                          {{ item.displayText }}
+                        </option>
+                      }
+                    }
+                  </select>
+                }
+
+                @case ("textarea") {
+                  <textarea
+                    class="form-control form-control-sm"
+                    [class.error-border]="
+                      dynamicForm.get(ctrl.name)?.invalid &&
+                      dynamicForm.get(ctrl.name)?.touched
+                    "
+                    [formControlName]="ctrl.name"
+                    [placeholder]="ctrl.placeholder || ''"
+                    rows="2"
+                  ></textarea>
+                }
+
+                @case ("radio") {
+                  <div class="pt-1">
+                    @for (
+                      opt of lookupData[ctrl.name] | async;
+                      track opt.valueCode
+                    ) {
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          [id]="ctrl.name + opt.valueCode"
+                          [value]="opt.valueCode"
+                          [formControlName]="ctrl.name"
+                        />
+                        <label
+                          class="form-check-label"
+                          [for]="ctrl.name + opt.valueCode"
+                        >
+                          {{ opt.displayText }}
+                        </label>
+                      </div>
+                    }
+                  </div>
+                }
+
+                @case ("checkbox") {
+                  <div class="pt-1">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        [id]="ctrl.name"
+                        [formControlName]="ctrl.name"
+                      />
+                      <label class="form-check-label" [for]="ctrl.name">
+                        {{ ctrl.placeholder || ctrl.label }}
+                      </label>
+                    </div>
+                  </div>
+                }
+
+                @case ("richtext") {
+                  <div
+                    class="form-control form-control-sm pt-1 cursor-pointer"
+                    (click)="richText.show()"
+                  >
+                    <label class="form-check-label cursor-pointer text-muted">
+                      <i class="far fa-plus-square me-1"></i>
+                      {{ ctrl.placeholder || "Add Details" }}
+                    </label>
+                  </div>
+                  <app-rich-text
+                    #richText
+                    [control]="getControl(ctrl.name)"
+                  ></app-rich-text>
+                }
+
+                @default {
+                  <input
+                    [type]="ctrl.type"
+                    class="form-control form-control-sm"
+                    [class.error-border]="
+                      dynamicForm.get(ctrl.name)?.invalid &&
+                      dynamicForm.get(ctrl.name)?.touched
+                    "
+                    [formControlName]="ctrl.name"
+                    [placeholder]="ctrl.placeholder || ''"
+                  />
+                }
+              }
+
+              @if (
+                dynamicForm.get(ctrl.name)?.invalid &&
+                dynamicForm.get(ctrl.name)?.touched
+              ) {
+                <span class="text-danger small">
+                  @let errors = dynamicForm.get(ctrl.name)?.errors;
+
+                  @if (errors?.["required"]) {
+                    {{ ctrl.label }} is required.
+                  } @else if (errors?.["minlength"]) {
+                    {{ ctrl.label }} must be at least
+                    {{ errors?.["minlength"].requiredLength }} characters.
+                  } @else if (errors?.["pattern"]) {
+                    {{
+                      ctrl.validationMsg || "Invalid format for " + ctrl.label
+                    }}
+                  } @else if (errors?.["email"]) {
+                    Please enter a valid email address.
+                  } @else if (errors?.["min"]) {
+                    {{ ctrl.label }} must be at least {{ errors?.["min"].min }}.
+                  } @else {
+                    {{ ctrl.validationMsg || ctrl.label + " is invalid." }}
+                  }
+                </span>
+              }
+            </div>
+          }
+        }
+      </div>
+       <ng-content></ng-content>
+      @if (!config.buttonPlacement || config.buttonPlacement === "bottom") {
+        <div class="mt-4 border-top pt-3 text-end">
+          <div>
+            <button
+              type="button"
+              class="btn btn-sm btn-secondary me-2"
+              (click)="handleReset()"
+            >
+              <i class="fa fa-rotate-back me-1"></i> Reset
+            </button>
+
+            <button
+              type="submit"
+              class="btn btn-sm btn-success px-3"
+              [disabled]="dynamicForm.invalid"
+              (click)="handleSubmit()"
+            >
+              <i
+                [ngClass]="
+                  isEditMode ? 'fa fas fa-refresh' : 'far fa-save fs-6'
+                "
+                class="me-1"
+              ></i>
+              {{ isEditMode ? " Update" : config?.saveLabel || "Submit" }}
+            </button>
+          </div>
+        </div>
+      }
+    </form>
+  </div>
+</div>

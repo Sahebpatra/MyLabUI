@@ -1,0 +1,13 @@
+<div>
+  @if (config$ | async; as config) {
+    
+    <app-dynamic-form 
+      [config]="config" 
+      [initialData]="patientData"
+      [isEditMode]="isEditMode"
+      (onSave)="onPatientSave($event)" 
+      (onBack)="onBack()">
+    </app-dynamic-form>
+
+  }
+</div>

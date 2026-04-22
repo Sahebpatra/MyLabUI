@@ -39,6 +39,7 @@ import * as bootstrap from 'bootstrap';
 export class RichTextComponent {
   @Input({ required: true }) control!: FormControl;
   @ViewChild('modalElement') modalElement!: ElementRef;
+  private modalInstance: any;
 
   public Editor = ClassicEditor;
   public config: EditorConfig = {
@@ -112,15 +113,22 @@ export class RichTextComponent {
       }
     });
   }
-  show() {
-    const modal = new bootstrap.Modal(this.modalElement.nativeElement, {
-      focus: false,
-    });
-    modal.show();
-  }
 
-  close() {
-    const modal = bootstrap.Modal.getInstance(this.modalElement.nativeElement);
-    modal?.hide();
+
+show() {
+  // Initialize only if it doesn't exist
+  if (!this.modalInstance) {
+    this.modalInstance = new bootstrap.Modal(this.modalElement.nativeElement, {
+      focus: false,
+      backdrop: 'static'
+    });
   }
+  this.modalInstance.show();
+}
+
+close() {
+  // Use the stored instance to hide
+  this.modalInstance?.hide();
+}
+  
 }

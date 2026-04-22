@@ -11,7 +11,8 @@ export class CommonHttpService {
   private http = inject(HttpClient);
   constructor() { }
   get<T>(endpoint: string, params?: any): Observable<T> {
-    return this.http.get<T>(`${environment.API_URL}${endpoint}`, { params });
+    let url = `${environment.API_URL}${endpoint}`;
+    return this.http.get<T>(url, { params });
   }
   
   // Generic POST request

@@ -20,6 +20,27 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'new-test', pathMatch: 'full' },
       {
+        path: 'new-patient',
+        loadComponent: () =>
+          import('./pages/patients/patient-registration/patient-registration.component').then(
+            (m) => m.PatientRegistrationComponent,
+          ),
+      },
+      {
+        path: 'edit-patient/:id',
+        loadComponent: () =>
+          import('./pages/patients/patient-registration/patient-registration.component').then(
+            (m) => m.PatientRegistrationComponent,
+          ),
+      },
+      {
+        path: 'patient-list',
+        loadComponent: () =>
+          import('./pages/patients/patient-list/patient-list.component').then(
+            (m) => m.PatientListComponent,
+          ),
+      },
+      {
         path: 'test-list',
         loadComponent: () =>
           import('./pages/tests/test-list/test-list.component').then(
