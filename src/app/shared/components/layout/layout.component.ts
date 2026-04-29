@@ -86,7 +86,7 @@ export class LayoutComponent {
           label: 'Segmentation',
           icon: 'fas fa-project-diagram',
           route: '/admin/segmentation',
-          permission: true
+          permission: false
         }
       ]
     },

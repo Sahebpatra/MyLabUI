@@ -93,12 +93,12 @@
         </a>
 
         @if (openMenu === item.label) {
-        <ul class="nav flex-column ps-4 bg-light">
+        <ul class="nav flex-column ps-4">
           @for (child of item.children; track child.label) {
 
           @if (child.permission) {
           <li class="nav-item">
-            <a [routerLink]="child.route" routerLinkActive="active" class="nav-link text-secondary py-2 small">
+            <a [routerLink]="child.route" routerLinkActive="active" class="nav-link text-white py-2 small">
               <i class="{{ child.icon }} fa-fw"></i>
               @if (!isCollapsed) {
               <span class="ms-3">{{ child.label }}</span>
