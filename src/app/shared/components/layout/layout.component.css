@@ -79,3 +79,46 @@
 .full-body{
   background: #8080802b;
 }
+/* Dropdown container */
+.custom-dropdown {
+  border-radius: 12px;
+  padding: 8px;
+  background: #ffffff;
+}
+
+/* Menu items */
+.custom-item {
+  border-radius: 8px;
+  padding: 4px 10px;
+  transition: all 0.25s ease;
+}
+
+/* Icon alignment */
+.custom-item i {
+  width: 22px;
+  text-align: center;
+  transition: transform 0.25s ease;
+}
+
+/* Hover effect (main magic ✨) */
+.custom-item:hover {
+  background: linear-gradient(135deg,#4f9ee4, #13949b);
+  color: #fff !important;
+  transform: scale(1.05); /* Zoom effect */
+}
+
+/* Icon zoom */
+.custom-item:hover i {
+  transform: scale(1.2);
+}
+
+/* Logout special style */
+.custom-item.logout:hover {
+  background: linear-gradient(135deg, #ff4b2b, #ff416c);
+  color: #fff !important;
+}
+
+/* Smooth shadow on hover */
+.custom-item:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
