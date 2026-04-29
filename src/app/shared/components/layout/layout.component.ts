@@ -18,7 +18,7 @@ interface MenuItem {
   styleUrl: './layout.component.css'
 })
 
-
+      
 export class LayoutComponent {
   isCollapsed: boolean = false;
   menuItems: MenuItem[] = [
@@ -27,6 +27,18 @@ export class LayoutComponent {
       icon: 'fas fa-home',
       permission: true,
       route: '/dashboard'
+    },
+     {
+      label: 'Patient Registration',
+      icon: 'fas fa-user-plus',
+      permission: true,
+      route: '/admin/new-patient'
+    },
+     {
+      label: 'Patient List',
+      icon: 'fas fa-users',
+      permission: true,
+      route: '/admin/patient-list'
     },
     {
       label: 'Tests',

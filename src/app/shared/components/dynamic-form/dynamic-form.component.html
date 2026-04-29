@@ -8,7 +8,7 @@
       >
         <i class="fa fa-caret-left me-1"></i> Back
       </button>
-      <span class="fw-bold">{{ config?.title }}</span>
+      <span class="fw-bold">{{ config.title }}</span>
       @if (config.buttonPlacement === "top") {
         <div>
           <button
@@ -29,7 +29,7 @@
               [ngClass]="isEditMode ? 'fa fas fa-refresh' : 'far fa-save fs-6'"
               class="me-1"
             ></i>
-            {{ isEditMode ? " Update" : config?.saveLabel || "Submit" }}
+            {{ isEditMode ? " Update" : config.saveLabel || "Submit" }}
           </button>
         </div>
       }
@@ -217,7 +217,7 @@
                 "
                 class="me-1"
               ></i>
-              {{ isEditMode ? " Update" : config?.saveLabel || "Submit" }}
+              {{ isEditMode ? " Update" : config.saveLabel || "Submit" }}
             </button>
           </div>
         </div>
