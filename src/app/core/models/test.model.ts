@@ -1,4 +1,4 @@
-import { TestParameterModel } from "./TestParameterModel";
+import { TestParameterModel } from "./test-parameter.model";
 
 export interface TestModel {
     testId: number;

@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { LabTestService } from '../../../core/services/lab-test.service';
-import { TestModelClass } from '../../../core/models/TestModel';
+import { TestModelClass } from '../../../core/models/test.model';
 import { NotificationService } from '../../../core/services/common/notification.service';
 import { RouterLink } from '@angular/router';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
