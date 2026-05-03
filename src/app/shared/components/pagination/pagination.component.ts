@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     @if (totalPages > 1) {
-      <nav>
+      <nav class="mt-2">
         <ul class="pagination justify-content-end">
           <li class="page-item" [class.disabled]="currentPage === 1">
             <a class="page-link" (click)="changePage(currentPage - 1)" style="cursor:pointer">Previous</a>

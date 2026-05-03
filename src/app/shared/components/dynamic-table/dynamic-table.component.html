@@ -1,0 +1,65 @@
+<div class="card shadow-sm border-1">
+  <div class="card-header bg-white border-bottom">
+    <div class="d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">{{ title }}</h5>
+      <button type="button" class="btn btn-sm btn-outline-secondary shadow-sm"  (click)="onAddNewClick()">
+        <i [class]="AddNewButton.icon??'fa fa-plus'"></i> {{ AddNewButton.ButtonText ?? 'Add New' }}
+      </button>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <!-- table-responsive handles mobile; border and rounded-3 handle the radius -->
+    <div class="table-responsive border rounded-3 shadow-sm">
+        
+      <table class="table table-hover mb-0 text-nowrap">
+        <!-- table-light or table-dark adds the header background color -->
+        <thead class="table-light border-bottom">
+          <tr>
+            <th scope="col" class="py-3 px-3">#</th>
+            @for (item of columns; track $index) {
+              <th scope="col" class="py-3 px-3">{{ formatHeader(item) | titlecase }}</th>
+            }
+            <th scope="col" class="py-3 px-3 text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of displayList; track $index) {
+            <tr class="align-middle">
+              <td class="px-3">{{ pageSize * (page - 1) + $index + 1 }}</td>
+              @for (column of columns; track $index) {
+                <td class="px-3">{{ item[column] }}</td>
+              }
+              <td class="text-center px-3 gap-2">
+                <i *ngIf="isViewbutton" class="fa fa-eye me-1 text-success cursor-pointer" (click)="onViewClick(item)" ngbTooltip="View"></i>
+                <i *ngIf="isEditable" class="far fa-edit me-1 text-primary cursor-pointer" (click)="onEditClick(item)" ngbTooltip="Edit"></i>
+                <i *ngIf="isDeletable" class="fa fa-trash-alt text-danger cursor-pointer" (click)="onDeleteClick(item)" ngbTooltip="Delete"></i>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination Section -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3 text-nowrap w-100">
+      <div class="d-flex align-items-center">
+        <span class="text-muted me-3">Total: <strong>{{ collectionSize }}</strong></span>
+        <select class="form-select form-select-sm" [(ngModel)]="pageSize" (ngModelChange)="updateTable()">
+          @for (item of pageSizeOptions; track $index) {
+            <option [ngValue]="item">{{ item }}</option>
+          }
+        </select>
+        <span class="ms-2 text-muted">per page</span>
+      </div>
+      
+      <ngb-pagination
+        [collectionSize]="collectionSize"
+        [(page)]="page"
+        [pageSize]="pageSize"
+        (pageChange)="updateTable()"
+        class="mb-0"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

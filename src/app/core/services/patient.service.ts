@@ -20,6 +20,9 @@ export class PatientService {
   getAllPatients(): Observable<ApiResponse<PatientModel[]>> {
     return this.commonhttp.get(constants.ENDPOINTS.PATIENT.GET_PATIENT_LIST);
   }
+  getAllDynamicallyPatients(): Observable<ApiResponse<any>> {
+    return this.commonhttp.get(constants.ENDPOINTS.PATIENT.GET_DYNAMIC_LIST);
+  }
   getPatientById(id: number): Observable<ApiResponse<PatientModel>> {
     return this.commonhttp.get(`${constants.ENDPOINTS.PATIENT.GET_PATIENT_BY_ID}/${id}`);
   }

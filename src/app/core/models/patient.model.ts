@@ -14,7 +14,7 @@ export class PatientModel {
   referringPhysician: string | null;
   phlebotomist: string | null;
   barcode: string | null;
-  collectionDate: string | null;
+  collectionDate:  string | null ;
   collectionTime: string | null;
   weight: number | null;
   height: number | null;

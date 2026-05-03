@@ -1,9 +1,11 @@
 export const constants = {
   ENDPOINTS: {
-    MASTERS: {
-      GET_DROPDOWN_ITEMS: 'masters/get-dropdown-items',
-      GET_DEPARTMENT_LIST: 'masters/get-departments',
-      GET_DOCTORS_LIST: 'masters/get-doctors',
+    COMMON : {
+      GET_LIST_PAGED: 'common/list/:menuname',//dynamic list page with menu name as parameter
+      GET_DROPDOWN_ITEMS: 'common/get-dropdown-items',
+      GET_DROPDOWNS : 'common/get-dropdowns',
+      GET_DEPARTMENT_LIST: 'common/get-departments',
+      GET_DOCTORS_LIST: 'common/get-doctors',
     },
     LAB_TEST: {
       SUBMIT_TEST: 'labtest/submit',
@@ -14,6 +16,7 @@ export const constants = {
       SUBMIT_PATIENT: 'patient/submit',
       GET_PATIENT_BY_ID: 'patient/get-by-id',
       GET_PATIENT_LIST: 'patient/get-list',
+      GET_DYNAMIC_LIST: 'patient/get-list-dynamic',
     },
   },
 };

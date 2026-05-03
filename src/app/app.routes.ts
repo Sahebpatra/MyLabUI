@@ -20,6 +20,13 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'new-test', pathMatch: 'full' },
       {
+        path: 'list/:menuName',
+        loadComponent: () =>
+          import('./pages/list-page/list-page.component').then(
+            (m) => m.ListPageComponent,
+          ),
+      },
+      {
         path: 'new-patient',
         loadComponent: () =>
           import('./pages/patients/patient-registration/patient-registration.component').then(

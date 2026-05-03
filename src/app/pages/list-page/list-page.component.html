@@ -1,0 +1,13 @@
+<app-dynamic-table
+  [title]="'Patient List'"
+  [AddNewButton]="AddNewButton"
+  [tableData]="listData"
+  [isViewbutton]="true"
+  [isEditable]="true"
+  [isDeletable]="true"
+  (onEdit)="onHandleEdit($event)"
+  (onDelete)="onHandleDelete($event)"
+  (onView)="onHandleView($event)"
+  (onAddNew)="onHandleAddNew()"
+>
+</app-dynamic-table>

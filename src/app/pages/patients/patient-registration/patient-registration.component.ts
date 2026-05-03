@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { MasterDataService } from '../../../core/services/common/master-data.service';
+import { CommonService } from '../../../core/services/common/common.service';
 import { PatientModel } from '../../../core/models/patient.model';
 import { FormConfigService } from '../../../core/services/common/form-config.service';
 import { DynamicFormConfig } from '../../../shared/models/dynamic-form.model';
@@ -24,11 +24,11 @@ export class PatientRegistrationComponent {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private notify = inject(NotificationService);
-  masterService = inject(MasterDataService);
+  masterService = inject(CommonService);
   patientService = inject(PatientService);
 
   config$!: Observable<DynamicFormConfig>;
-  gender$ = this.masterService.gender$;
+  // gender$ = this.masterService.gender$;
   isEditMode = false;
 
   //patientForm!: FormGroup;
@@ -46,12 +46,12 @@ export class PatientRegistrationComponent {
     this.patientService.getPatientById(id).subscribe({
       next: (res: ApiResponse<PatientModel>) => {
         this.patientData = res.data;
-        console.log('Edit Data Loaded:', this.patientData);   
+        console.log('Edit Data Loaded:', this.patientData);
       },
       error: (err) => {
         console.error('Error fetching patient data', err);
         this.notify.showError('Getting internal error while fetching details');
-      }
+      },
     });
   }
   onPatientSave(formData: any) {
@@ -59,15 +59,25 @@ export class PatientRegistrationComponent {
     // 2. Fix the ID: Convert "" to null or 0
     const patientData = {
       ...formData,
-      id: formData.id || 0 ,
-      collectionDate : formData.collectionDate ? new Date(formData.collectionDate).toISOString() : null,
-      collectionTime : formData.collectionTime ? new Date(`1970-01-01T${formData.collectionTime}`).toISOString() : null,
+      id: formData.id || 0,
+      collectionDate: formData.collectionDate
+        ? new Date(
+            formData.collectionDate.year,
+            formData.collectionDate.month - 1,
+            formData.collectionDate.day,
+          ).toISOString()
+        : null,
+      collectionTime: formData.collectionTime
+        ? new Date(`1970-01-01T${formData.collectionTime}`).toISOString()
+        : null,
     };
     this.patientService.submitPatient(patientData).subscribe({
       next: (res) => {
         if (res.success) {
-          this.notify.showSuccess(`Patient ${this.isEditMode ? 'updated' : 'saved'} successfully`);
-          this.router.navigate(['/admin/patient-list']);
+          this.notify.showSuccess(
+            `Patient ${this.isEditMode ? 'updated' : 'saved'} successfully`,
+          );
+          this.router.navigate(['/admin/list/patients']);
         } else {
           this.notify.showError('Failed to save patient');
         }
@@ -83,6 +93,6 @@ export class PatientRegistrationComponent {
   }
 
   onBack() {
-    this.router.navigate(['/admin/patient-list']);
+    this.router.navigate(['/admin/list/patients']);
   }
 }

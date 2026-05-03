@@ -1,22 +1,25 @@
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { PatientService } from '../../../core/services/patient.service';
-import { NotificationService } from '../../../core/services/common/notification.service';
-import { DynamicTableComponent } from '../../../shared/components/dynamic-table/dynamic-table.component';
+import { DynamicTableComponent } from '../../shared/components/dynamic-table/dynamic-table.component';
+import { NotificationService } from '../../core/services/common/notification.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommonHttpService } from '../../core/services/common/common-http.service';
+import { CommonService } from '../../core/services/common/common.service';
 
 @Component({
-  selector: 'app-patient-list',
+  selector: 'app-list-page',
   standalone: true,
   imports: [DynamicTableComponent],
-  templateUrl: './patient-list.component.html',
-  styleUrl: './patient-list.component.css',
+  templateUrl: './list-page.component.html',
+  styleUrl: './list-page.component.css'
 })
-export class PatientListComponent {
-  private patientService = inject(PatientService);
+export class ListPageComponent {
+private commonService = inject(CommonService);
   private notify: NotificationService = inject(NotificationService);
   private router = inject(Router);
+  private activeRoute = inject(ActivatedRoute);
 
-  pagetitle = 'Patient List';
+   pagetitle: string = '';
+
   AddNewButton = {
     required: true,
     ButtonText: 'New patient',
@@ -26,24 +29,27 @@ export class PatientListComponent {
   pageSize = 10;
   SearchTerm: string = '';
   IsActive: number = 1;
-  patientList: any[] = [];
+  listData: any[] = [];
 
   ngOnInit() {
-    this.getAllPatients();
+    this.activeRoute.data.subscribe(data => {
+      const menuName = data['menuName'] || 'patients';
+      this.getlist(menuName);
+    });
   }
 
-  getAllPatients() {
-    this.patientService.getAllDynamicallyPatients().subscribe({
-      next: (res) => {
+  getlist(menuName: string = 'patients') {
+    this.commonService.getListPage(menuName).subscribe({
+      next: (res : any) => {
         if (res.success) {
-          this.patientList = JSON.parse(res.data) || [];
+          this.listData = JSON.parse(res.data) || [];
         } else {
           console.error('API Error:', res.message);
         }
       },
       error: (err) => {
         console.error('API Error:', err);
-        this.patientList = [];
+        this.listData = [];
         this.notify.showError(
           'Getting internal error while fetching patient list',
         );

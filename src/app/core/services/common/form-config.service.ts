@@ -23,7 +23,7 @@ export class FormConfigService {
             label: 'Test Type',
             type: 'select',
             gridClass: 'col-md-4 col-lg-2',
-            asyncOptionsKey: 'testType$',
+            asyncOptionsKey: 'TestType',
             validators: { required: true },
           },
           {
@@ -31,7 +31,7 @@ export class FormConfigService {
             label: 'Department',
             type: 'select',
             gridClass: 'col-md-4 col-lg-2',
-            asyncOptionsKey: 'departments$',
+            asyncOptionsKey: 'Department',
             validators: { required: true },
           },
           {
@@ -61,7 +61,7 @@ export class FormConfigService {
             label: 'Sample',
             type: 'select',
             gridClass: 'col-md-4 col-lg-2',
-            asyncOptionsKey: 'samples$',
+            asyncOptionsKey: 'sample',
             validators: { required: true },
           },
           {
@@ -69,7 +69,7 @@ export class FormConfigService {
             label: 'Sample Color',
             type: 'select',
             gridClass: 'col-md-4 col-lg-2',
-            asyncOptionsKey: 'sampleColors$',
+            asyncOptionsKey: 'sampleColor',
           },
           {
             name: 'barCodeSuffix',
@@ -82,7 +82,7 @@ export class FormConfigService {
             label: 'Gender',
             type: 'radio',
             gridClass: 'col-md-6 col-lg-3',
-            asyncOptionsKey: 'testGender$',
+            asyncOptionsKey: 'testGender',
             validators: { required: true },
           },
           {
@@ -96,7 +96,7 @@ export class FormConfigService {
             label: 'Required Fields',
             type: 'radio',
             gridClass: 'col-md-6 col-lg-6',
-            asyncOptionsKey: 'reqFields$',
+            asyncOptionsKey: 'RequiredFields',
             value: '1',
           },
         ],
@@ -151,7 +151,7 @@ export class FormConfigService {
             label: 'Gender',
             type: 'select',
             gridClass: 'col-md-2 col-lg-2',
-            asyncOptionsKey: 'gender$',
+            asyncOptionsKey: 'gender',
             validators: { required: true },
             validationMsg: 'Gender is required.',
           },
@@ -184,7 +184,8 @@ export class FormConfigService {
             label: 'Referring Physician',
             type: 'select',
             gridClass: 'col-md-4 col-lg-3',
-            apiUrl: 'masters/get-doctors',
+            asyncOptionsKey: 'doctor',
+            //apiUrl: 'masters/get-doctors',
           },
           {
             name: 'phlebotomist',

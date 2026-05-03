@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { LoaderService } from '../../../core/services/common/loader.service';
 @Component({
   selector: 'app-layout',
   standalone: true,
@@ -10,7 +11,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 })
 export class LayoutComponent {
   isCollapsed: boolean = false;
-
+  loaderService: LoaderService = inject(LoaderService);
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
   }

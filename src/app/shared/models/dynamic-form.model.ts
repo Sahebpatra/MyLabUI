@@ -31,7 +31,7 @@ export interface ControlConfig {
 export interface DynamicFormConfig {
   title: string;
   buttonPlacement?: 'top' | 'bottom';
-  saveLabel?: string;
-  cancelLabel?: string;
+  saveLabel?: string | null;
+  cancelLabel?: string | null;
   controls: ControlConfig[];
 }

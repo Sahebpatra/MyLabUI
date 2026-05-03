@@ -14,18 +14,24 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MasterDataService } from '../../../core/services/common/master-data.service';
+import { CommonService } from '../../../core/services/common/common.service';
 import { map, Observable, of } from 'rxjs';
 import { DynamicFormConfig } from '../../models/dynamic-form.model';
 import { CommonHttpService } from '../../../core/services/common/common-http.service';
-import { DropDownItems } from '../../models/select-option.model';
 import { NotificationService } from '../../../core/services/common/notification.service';
 import { RichTextComponent } from '../rich-text/rich-text.component';
+import { ApiResponse } from '../../models/api-response.model';
+import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-dynamic-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RichTextComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RichTextComponent,
+    NgbDatepickerModule,
+  ],
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.css'],
 })
@@ -37,12 +43,12 @@ export class DynamicFormComponent implements OnInit {
   private _initialData: any;
   @Input() set initialData(data: any) {
     if (data && this.dynamicForm) {
-      this.dynamicForm.patchValue(data);
+      this.dynamicForm.patchValue( this.transformIncomingData(data) );
     }
     this._initialData = data;
   }
   private fb = inject(FormBuilder);
-  private masterService = inject(MasterDataService);
+  private masterService = inject(CommonService);
   private commonHttp = inject(CommonHttpService);
   private notifyService = inject(NotificationService);
   dynamicForm!: FormGroup;
@@ -51,10 +57,38 @@ export class DynamicFormComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     if (this._initialData) {
-      this.dynamicForm.patchValue(this._initialData);
+      this.dynamicForm.patchValue(
+        this.transformIncomingData(this._initialData),
+      );
     }
   }
+  private transformIncomingData(data: any) {
+    const transformed = { ...data };
 
+    this.config.controls.forEach((ctrl) => {
+      const value = transformed[ctrl.name];
+      if (!value) return;
+
+      if (ctrl.type === 'date') {
+        // Use your existing masterService helper
+        if(typeof value === 'string') {
+        transformed[ctrl.name] = this.masterService.toNgbDate(value);
+        } else {
+          transformed[ctrl.name] = value;
+        }
+      } else if (ctrl.type === 'time') {
+        // Use your existing masterService helper
+        if(typeof value === 'string') {
+        transformed[ctrl.name] = this.masterService.toNgbTime(value);
+        } else {
+          transformed[ctrl.name] = value;
+        }
+
+      }
+    });
+
+    return transformed;
+  }
   createForm() {
     const formControls: any = {};
 
@@ -69,24 +103,23 @@ export class DynamicFormComponent implements OnInit {
     //for cascading dropdowns, setup value change listeners after form is created
     this.setupCascadingLogic();
   }
- private loadControlOptions(ctrl: any, parentValue?: any) {
-  const typesWithChoices = ['select', 'radio', 'checkbox'];
-  if (!typesWithChoices.includes(ctrl.type)) return;
-  if (ctrl.apiUrl) {
-    const url = parentValue ? `${ctrl.apiUrl}${parentValue}` : ctrl.apiUrl;
-    this.lookupData[ctrl.name] = this.commonHttp
-      .get<any>(url)
-      .pipe(map((response) => response.data || response));
-  } 
+  private loadControlOptions(ctrl: any, parentValue?: any) {
+    const typesWithChoices = ['select', 'radio', 'checkbox'];
+    if (!typesWithChoices.includes(ctrl.type)) return;
 
-  else if (ctrl.asyncOptionsKey) {
-    this.lookupData[ctrl.name] = (this.masterService as any)[ctrl.asyncOptionsKey];
+    if (ctrl.apiUrl) {
+      const url = parentValue ? `${ctrl.apiUrl}${parentValue}` : ctrl.apiUrl;
+      this.lookupData[ctrl.name] = this.commonHttp
+        .get<ApiResponse<any[]>>(url)
+        .pipe(map((response) => response.data ?? []));
+    } else if (ctrl.asyncOptionsKey) {
+      this.lookupData[ctrl.name] = this.masterService.getDropdownObservable(
+        ctrl.asyncOptionsKey,
+      );
+    } else if (ctrl.options) {
+      this.lookupData[ctrl.name] = of(ctrl.options);
+    }
   }
-  else if (ctrl.options) {
-    // Wrap hardcoded options in an observable to keep the template logic consistent (| async)
-    this.lookupData[ctrl.name] = of(ctrl.options);
-  }
-}
 
   private setupCascadingLogic() {
     this.config.controls.forEach((ctrl) => {
@@ -143,7 +176,7 @@ export class DynamicFormComponent implements OnInit {
   //   }
   // }
   handleSubmit() {
-   if (this.dynamicForm.valid) {
+    if (this.dynamicForm.valid) {
       const rawValue = this.dynamicForm.value;
       const sanitizedPayload: any = {};
       Object.keys(rawValue).forEach((key) => {

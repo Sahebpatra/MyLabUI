@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { MasterDataService } from '../../../core/services/common/master-data.service';
+import { CommonService } from '../../../core/services/common/common.service';
 import { ApiResponse } from '../../../shared/models/api-response.model';
 import { CommonModule } from '@angular/common';
 import { ParametersComponent } from './parameters/parameters.component';
@@ -32,19 +32,19 @@ import { DynamicFormComponent } from '../../../shared/components/dynamic-form/dy
 })
 export class NewTestsComponent implements OnInit {
   private configService = inject(FormConfigService);
-  private masterService = inject(MasterDataService);
+  private masterService = inject(CommonService);
   private testService = inject(LabTestService);
   private notify: NotificationService = inject(NotificationService);
   private activeroute = inject(ActivatedRoute);
   private router = inject(Router);
 
-  departmentList$ = this.masterService.departments$;
-  testType$ = this.masterService.testTypes$;
-  sample$ = this.masterService.samples$;
-  sampleColor$ = this.masterService.sampleColors$;
-  unitFieldType$ = this.masterService.unitFieldTypes$;
-  testGender$ = this.masterService.testGender$;
-  reqField$ = this.masterService.reqFields$;
+  // departmentList$ = this.masterService.departments$;
+  // testType$ = this.masterService.testTypes$;
+  // sample$ = this.masterService.samples$;
+  // sampleColor$ = this.masterService.sampleColors$;
+  // unitFieldType$ = this.masterService.unitFieldTypes$;
+  // testGender$ = this.masterService.testGender$;
+  // reqField$ = this.masterService.reqFields$;
 
   config$!: Observable<DynamicFormConfig>;
 
@@ -72,7 +72,7 @@ export class NewTestsComponent implements OnInit {
       next: (res) => {
         //console.log(res);
         if (res.success) {
-           this.testData = res.data[0];
+           this.testData = { ...res.data[0],gender : res.data[0].gender.toString()};
           //this.testForm.patchValue(testData);
           if (this.testData?.details) {
             this.parameterList = [...JSON.parse(this.testData.details)];

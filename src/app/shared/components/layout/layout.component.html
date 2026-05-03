@@ -37,9 +37,9 @@
           }
         </a>
       </li>
-           <li class="nav-item">
+      <li class="nav-item">
         <a
-          routerLink="/admin/patient-list"
+          routerLink="/admin/list/patients"
           routerLinkActive="active"
           class="nav-link text-secondary py-3"
         >
@@ -178,6 +178,19 @@
 
     <!-- Content Body -->
     <main class="p-2 flex-grow-1 overflow-y-scroll-auto">
+      <div *ngIf="loaderService.isLoading()" class="modern-loader-overlay">
+        <div class="loader-content">
+          <!-- Modern ng-bootstrap Growing Spinner -->
+          <div
+            class="spinner-grow text-primary"
+            style="width: 3rem; height: 3rem"
+            role="status"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="mt-2 fw-bold text-primary">Please wait...</div>
+        </div>
+      </div>
       <router-outlet></router-outlet>
     </main>
   </div>
