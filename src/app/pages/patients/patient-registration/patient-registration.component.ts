@@ -77,7 +77,7 @@ export class PatientRegistrationComponent {
           this.notify.showSuccess(
             `Patient ${this.isEditMode ? 'updated' : 'saved'} successfully`,
           );
-          this.router.navigate(['/admin/list/patients']);
+          this.router.navigate(['/admin/list/patient']);
         } else {
           this.notify.showError('Failed to save patient');
         }
@@ -93,6 +93,6 @@ export class PatientRegistrationComponent {
   }
 
   onBack() {
-    this.router.navigate(['/admin/list/patients']);
+    this.router.navigate(['/admin/list/patient']);
   }
 }

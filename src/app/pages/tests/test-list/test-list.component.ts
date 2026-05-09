@@ -26,7 +26,7 @@ export class TestListComponent implements OnInit {
   getTestList() {
     this.testService.getAllTests().subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         if (res.success) {
           this.testList = res.data;
         }

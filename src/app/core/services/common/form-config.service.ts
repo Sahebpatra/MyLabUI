@@ -186,13 +186,26 @@ export class FormConfigService {
             gridClass: 'col-md-4 col-lg-3',
             asyncOptionsKey: 'doctor',
             //apiUrl: 'masters/get-doctors',
-          },
+          }
+          // {
+          //   name: 'phlebotomist',
+          //   label: 'Phlebotomist',
+          //   type: 'select',
+          //   gridClass: 'col-md-4 col-lg-3',
+          //   apiUrl: 'Staff/GetPhlebotomists',
+          // },
+          ,
           {
-            name: 'phlebotomist',
-            label: 'Phlebotomist',
+            name: 'B2B',
+            label: 'B2B Partner',
             type: 'select',
             gridClass: 'col-md-4 col-lg-3',
-            apiUrl: 'Staff/GetPhlebotomists',
+            //apiUrl: 'Staff/GetPhlebotomists',
+            options: [
+              { displayText: 'Neucleus', valueCode: '1' },
+              { displayText: 'Bidhan', valueCode: '2' },
+              { displayText: 'Jibandip', valueCode: '3' },
+            ],
           },
           {
             name: 'barcode',

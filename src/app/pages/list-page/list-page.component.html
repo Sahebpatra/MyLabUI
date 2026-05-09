@@ -1,13 +1,7 @@
 <app-dynamic-table
-  [title]="'Patient List'"
-  [AddNewButton]="AddNewButton"
+  *ngIf="config"
+  [config]="config"
   [tableData]="listData"
-  [isViewbutton]="true"
-  [isEditable]="true"
-  [isDeletable]="true"
-  (onEdit)="onHandleEdit($event)"
-  (onDelete)="onHandleDelete($event)"
-  (onView)="onHandleView($event)"
-  (onAddNew)="onHandleAddNew()"
+  (onAction)="handleAction($event)"
 >
 </app-dynamic-table>
