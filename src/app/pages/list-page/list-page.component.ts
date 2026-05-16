@@ -40,7 +40,7 @@ export class ListPageComponent implements OnInit {
         ButtonText: `New ${menuName.charAt(0).toUpperCase() + menuName.slice(1)}`,
         icon: 'fa fa-user-plus',
         class: 'btn-outline-secondary',
-        redirectTo: `/admin/new-${menuName}`,
+        redirectTo: `/new-${menuName}`,
       },
       actions: [
         {
@@ -48,14 +48,14 @@ export class ListPageComponent implements OnInit {
           label: 'View',
           icon: 'fa fa-eye',
           class: 'text-success',
-          redirectTo: `/admin/view-${menuName}`,
+          redirectTo: `/view-${menuName}`,
         },
         {
           actionKey: 'edit',
           label: 'Edit',
           icon: 'far fa-edit',
           class: 'text-primary',
-          redirectTo: `/admin/edit-${menuName}`,
+          redirectTo: `/edit-${menuName}`,
         },
         {
           actionKey: 'delete',

@@ -5,7 +5,7 @@ import { CommonHttpService } from './common-http.service';
 import { DropDownItems } from '../../../shared/models/select-option.model';
 import { ApiResponse } from '../../../shared/models/api-response.model';
 import { DepartmentModel } from '../../models/department.model';
-import { constants } from '../../constants/constants';
+import { constants } from '../../constants/endpoint.const.';
 
 @Injectable({ providedIn: 'root' })
 export class CommonService {

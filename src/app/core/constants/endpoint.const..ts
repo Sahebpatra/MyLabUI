@@ -1,9 +1,15 @@
 export const constants = {
   ENDPOINTS: {
-    COMMON : {
-      GET_LIST_PAGED: 'common/list/:menuname',//dynamic list page with menu name as parameter
+    AUTH: {
+      GET_OTP: 'auth/request-otp',
+      LOGIN: 'auth/login',
+      LOGOUT: 'auth/logout',
+      REFRESH_TOKEN: 'auth/refresh-token',
+    },
+    COMMON: {
+      GET_LIST_PAGED: 'common/list/:menuname', //dynamic list page with menu name as parameter
       GET_DROPDOWN_ITEMS: 'common/get-dropdown-items',
-      GET_DROPDOWNS : 'common/get-dropdowns',
+      GET_DROPDOWNS: 'common/get-dropdowns',
       GET_DEPARTMENT_LIST: 'common/get-departments',
       GET_DOCTORS_LIST: 'common/get-doctors',
     },

@@ -44,7 +44,7 @@
             <input type="hidden" [formControlName]="ctrl.name" />
           } @else {
             <div [class]="ctrl.gridClass || 'col-md-4'">
-              <label class="form-label fw-semibold">
+              <label class="form-label fw-medium">
                 {{ ctrl.label }}
                 @if (ctrl.validators?.required) {
                   <span class="text-danger">*</span>
@@ -172,6 +172,7 @@
                     </button>
                   </div>
                 }
+                
                 @default {
                   <input
                     [type]="ctrl.type"

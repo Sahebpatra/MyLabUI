@@ -1,0 +1,34 @@
+
+.chevron-box {
+  width: 30px;
+  height: 40px;
+  border-radius: 4px;  
+  background-color: #fff;
+  transition: all 0.2s ease;
+  box-shadow: 1px 0px 1px 0px #adb5bd87;
+  margin-left: -20px;
+}
+.chevron-box:hover {
+  background-color: #f8f9fa;
+  /* border-color: #adb5bd87; */
+}
+.no-caret::after {
+  display: none !important;
+}
+.chevron-box:hover {
+  background-color: #f8f9fa;
+  /* border-color: #adb5bd87; */
+}
+.no-caret::after {
+  display: none !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Ensure the dropdown menu doesn't look cut off */
+.dropdown-menu {
+  min-width: 180px;
+}
+

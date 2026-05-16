@@ -15,10 +15,10 @@ export const routes: Routes = [
       import('./pages/login/login.component').then((m) => m.LoginComponent),
   },
   {
-    path: 'admin',
+    path: '',
     component: LayoutComponent,
     children: [
-      { path: '', redirectTo: 'new-test', pathMatch: 'full' },
+      // { path: '', redirectTo: 'new-test', pathMatch: 'full' },
       {
         path: 'list/:menuName',
         loadComponent: () =>

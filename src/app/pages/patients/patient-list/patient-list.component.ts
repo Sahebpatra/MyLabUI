@@ -51,12 +51,12 @@ export class PatientListComponent {
     });
   }
   onHandleAddNew() {
-    this.router.navigate(['/admin/new-patient']);
+    this.router.navigate(['/new-patient']);
   }
   onHandleEdit(Patient: any) {
     const patientId = Patient.Id;
     if (patientId) {
-      this.router.navigate(['/admin/edit-patient', patientId]);
+      this.router.navigate(['/edit-patient', patientId]);
     } else {
       this.notify.showError('Invalid patient ID');
     }

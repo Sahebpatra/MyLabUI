@@ -9,7 +9,7 @@ td {
 }
 label,
 th {
-  font-weight: 500;
+  font-weight: 600;
 }
 .form-control,
 .form-select,
@@ -66,8 +66,6 @@ th {
   margin-top: 10px;
   border: 1px solid #e0e0e0 !important; /* Lighter container border */
 }
-
-/* Remove internal borders that conflict with the outside wrapper */
 .table-container .table {
   margin-bottom: 0 !important;
   border: none !important;
@@ -78,24 +76,20 @@ th {
   border-bottom: none !important;
 }
 
-/* Make row borders thinner and lighter */
 .table-container table tr td,
 .table-container table tr th {
-  border-bottom: 1px solid #f0f0f0 !important; /* Very light, thin line */
-  border-top: 0 !important; /* Prevent double borders */
+  border-bottom: 1px solid #f0f0f0 !important;
+  border-top: 0 !important;
 }
 
-/* Remove border for the very last row to keep bottom corners clean */
 .table-container tbody tr:last-child td {
   border-bottom: 0 !important;
 }
 
-/* Lighten the header line */
 .table-container thead th {
   border-bottom: 1px solid #dee2e6 !important;
   background-color: #fafafa;
 }
-/* Fix for the top-left and top-right corners */
 .table-container thead th:first-child {
   border-top-left-radius: 5px;
 }
@@ -103,7 +97,6 @@ th {
   border-top-right-radius: 5px;
 }
 
-/* Fix for the bottom corners */
 .table-container tbody tr:last-child td:first-child {
   border-bottom-left-radius: 5px;
 }
@@ -133,7 +126,7 @@ input[type=number] {
   width: 100vw;
   height: 100vh;
   background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent */
-  backdrop-filter: blur(2px); /* Modern blur effect */
+  backdrop-filter: blur(2px); 
   display: flex;
   justify-content: center;
   align-items: center;

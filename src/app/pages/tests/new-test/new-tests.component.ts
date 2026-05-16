@@ -97,7 +97,7 @@ export class NewTestsComponent implements OnInit {
           if (res.success) {
             this.notify.showSuccess(res.message);
             this.parameterList = [];
-            this.router.navigate(['admin/test-list']);
+            this.router.navigate(['/test-list']);
           } else {
             this.notify.showError(res.message);
           }
@@ -114,6 +114,6 @@ export class NewTestsComponent implements OnInit {
   }
 
 onBack() {
-    this.router.navigate(['admin/test-list']);
+    this.router.navigate(['/test-list']);
   }
 }

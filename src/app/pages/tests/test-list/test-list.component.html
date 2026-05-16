@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-between">
       <h5>Test List</h5>
       <button
-        routerLink="/admin/new-test"
+        routerLink="/new-test"
         type="button"
         id="btnAddNew"
         class="btn btn-sm btn-outline-secondary"
@@ -43,7 +43,7 @@
               </td>
               <td class="text-center">
                 <i
-                  [routerLink]="['/admin/edit-test', item.testId]"
+                  [routerLink]="['/edit-test', item.testId]"
                   class="far fa-edit text-primary"
                   style="cursor: pointer"
                 ></i>

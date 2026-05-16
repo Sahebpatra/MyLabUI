@@ -1,0 +1,55 @@
+<aside id="sidebar-wrapper" [class.collapsed]="isCollapsed" class="bg-white border-end shadow-sm">
+  <div class="sidebar-brand p-3 d-flex align-items-center border-bottom ">
+    <i class="fas fa-microscope fa-2x text-primary me-2"></i>
+    @if (!isCollapsed) {
+      <span class="fw-bold fs-5 text-dark">MY LAB</span>
+    }
+  </div>
+
+  <ul class="nav flex-column mt-3">
+    @for (item of menuItems; track item.menuId) {
+      <li class="nav-item">
+        @if (item.children && item.children.length > 0) {
+          <!-- Parent Category -->
+          <div class="nav-link text-secondary py-3 mx-2 cursor-pointer d-flex align-items-center fw-medium" 
+               (click)="toggleSubMenu(item)">
+            <i [class]="item.iconClass + ' fa-fw me-3'"></i>
+            @if (!isCollapsed) {
+              <span class="flex-grow-1">{{ item.menuTitle }}</span>
+              <i class="fas fa-chevron-right small ms-auto chevron-arrow" 
+                 [class.rotate-90]="item.isOpen"></i>
+            }
+          </div>
+
+          <!-- Children -->
+          @if (item.isOpen && !isCollapsed) {
+            <ul class="nav flex-column sub-menu ms-3 pe-2">
+              @for (child of item.children; track child.menuId) {
+                <li class="nav-item">
+                  <a [routerLink]="child.routePath" 
+                     routerLinkActive="active" 
+                     [routerLinkActiveOptions]="{exact: false}"
+                     class="nav-link text-secondary py-2 px-4 small d-flex align-items-center fw-medium">
+                    <i [class]="child.iconClass + ' fa-fw me-2 small'"></i>
+                    <span>{{ child.menuTitle }}</span>
+                  </a>
+                </li>
+              }
+            </ul>
+          }
+        } @else {
+          <!-- Standard Single Link -->
+          <a [routerLink]="item.routePath" 
+             routerLinkActive="active" 
+             [routerLinkActiveOptions]="{exact: true}"
+             class="nav-link text-secondary py-3 mx-2 d-flex align-items-center fw-medium">
+            <i [class]="item.iconClass + ' fa-fw me-3'"></i>
+            @if (!isCollapsed) {
+              <span>{{ item.menuTitle }}</span>
+            }
+          </a>
+        }
+      </li>
+    }
+  </ul>
+</aside>

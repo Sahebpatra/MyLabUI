@@ -1,0 +1,40 @@
+<header class="navbar navbar-expand border-bottom sticky-top shadow-sm bg-white px-3">
+  <!-- Square Sidebar Toggle -->
+  <button class="btn btn-link text-dark p-0 chevron-box" (click)="toggle.emit()">
+    <i class="fas" [class.fa-chevron-left]="!isCollapsed" [class.fa-chevron-right]="isCollapsed"></i>
+  </button>
+
+  <div class="ms-auto d-flex align-items-center">
+    <span class="me-3 text-secondary d-none d-md-block">Welcome, {{userName}}</span>
+    
+    <!-- Profile Dropdown with fixes for off-screen issues -->
+    <div ngbDropdown 
+         display="dynamic" 
+         container="body" 
+         placement="bottom-end" 
+         class="d-inline-block">
+      
+      <!-- Toggle Icon (no-caret removes the default arrow) -->
+      <div class="cursor-pointer no-caret" ngbDropdownToggle id="userProfile">
+        <i class="fas fa-user-circle fa-2x text-primary"></i>
+      </div>
+
+      <!-- Dropdown Menu - dropdown-menu-end as backup -->
+      <div ngbDropdownMenu aria-labelledby="userProfile" class="shadow border-0 mt-2 dropdown-menu-end">
+        <button ngbDropdownItem routerLink="/profile" class="py-2 d-flex align-items-center">
+          <i class="fas fa-user me-2 small text-secondary"></i> 
+          <span>My Profile</span>
+        </button>
+        <button ngbDropdownItem routerLink="/settings" class="py-2 d-flex align-items-center">
+          <i class="fas fa-cog me-2 small text-secondary"></i> 
+          <span>Settings</span>
+        </button>
+        <div class="dropdown-divider"></div>
+        <button ngbDropdownItem (click)="onLogout()" class="py-2 text-danger fw-bold d-flex align-items-center">
+          <i class="fas fa-sign-out-alt me-2 small"></i> 
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>

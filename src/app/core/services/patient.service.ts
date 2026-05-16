@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { CommonHttpService } from './common/common-http.service';
-import { constants } from '../constants/constants';
+import { constants } from '../constants/endpoint.const.';
 import { ApiResponse } from '../../shared/models/api-response.model';
 import { Observable } from 'rxjs';
 import { List } from 'ckeditor5';

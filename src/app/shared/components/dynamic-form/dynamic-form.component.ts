@@ -21,7 +21,7 @@ import { CommonHttpService } from '../../../core/services/common/common-http.ser
 import { NotificationService } from '../../../core/services/common/notification.service';
 import { RichTextComponent } from '../rich-text/rich-text.component';
 import { ApiResponse } from '../../models/api-response.model';
-import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule ,NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -31,6 +31,7 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     RichTextComponent,
     NgbDatepickerModule,
+    NgbPopoverModule
   ],
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.css'],
